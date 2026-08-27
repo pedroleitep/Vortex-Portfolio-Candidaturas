@@ -937,6 +937,8 @@ body { padding-top: 65px; }
   .topo__nav { display: none; }
   .topo__acao { margin-left: auto; }
   .relogio { display: none; }
+  .botao--nav-zap { padding: 12px; aspect-ratio: 1; gap: 0; }
+  .botao--nav-zap .botao__rotulo { display: none; }
   .placar { grid-template-columns: repeat(2, 1fr); }
   .placar__item { border-bottom: 1px solid var(--linha); }
   .placar__item:nth-child(2n) { border-right: 0; }
