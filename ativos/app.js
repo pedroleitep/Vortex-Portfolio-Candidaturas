@@ -68,7 +68,7 @@ const PROJETOS = [
       "Chapa majoritária com vice: apresentação em vídeo, trajetória no Congresso e galeria de rua com a militância.",
     cor: "#E01B3C",
     grupo: "governo",
-    url: "https://lp-fabio-trad.vercel.app/",
+    url: "https://fabiotrad13.com.br/",
   },
   {
     id: "angela",
@@ -98,7 +98,7 @@ const PROJETOS = [
       "Norte de Minas: compromissos assumidos um a um, vídeos da estrada e agenda de quem vive rodando o interior.",
     cor: "#2B62E8",
     grupo: "estadual",
-    url: "https://ze-reis.vercel.app/",
+    url: "https://zereis.com.br/",
   },
   {
     id: "jacqueline",
@@ -128,7 +128,7 @@ const PROJETOS = [
       "Pauta econômica explicada em desenho: como o imposto sai da sua mão e volta, mais as pautas de cada região de Minas.",
     cor: "#FFD740",
     grupo: "federal",
-    url: "https://lp-igor-eto.vercel.app/",
+    url: "https://igoreto7077.com.br/",
   },
   {
     id: "modelo",
