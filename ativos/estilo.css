@@ -148,13 +148,45 @@ img, svg, iframe { display: block; max-width: 100%; }
    TOPO
    ========================================================= */
 .topo {
-  position: sticky;
+  position: fixed;
+  /* Sempre left:0 / right:0 — centralizamos via margin no interno */
+  left: 0;
+  right: 0;
   top: 0;
   z-index: 40;
+  /* Margem lateral que "encolhe" a navbar ao virar pílula */
+  margin-inline: 0;
+  border-radius: 0;
   background: rgba(10, 12, 22, 0.82);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--linha);
+  border: 1px solid transparent;
+  border-bottom-color: var(--linha);
+  box-shadow: none;
+  transition:
+    top         0.4s cubic-bezier(0.34, 1.15, 0.64, 1),
+    margin      0.4s cubic-bezier(0.34, 1.15, 0.64, 1),
+    border-radius 0.4s ease,
+    border-color  0.3s ease,
+    background    0.3s ease,
+    box-shadow    0.3s ease;
 }
+
+/* Estado pílula — ativado via JS ao scrollar */
+.topo.is-pill {
+  top: 14px;
+  /* Recua as bordas para criar o efeito de pílula flutuante */
+  margin-inline: clamp(12px, 3vw, 40px);
+  border-radius: 999px;
+  border-color: rgba(255, 255, 255, 0.09);
+  background: rgba(8, 10, 20, 0.94);
+  box-shadow:
+    0 2px 0  rgba(255, 255, 255, 0.04) inset,
+    0 10px 40px -6px rgba(0, 0, 0, 0.55);
+}
+.topo.is-pill .topo__interno {
+  padding: 7px 18px;
+}
+
 .topo__interno {
   max-width: var(--larg);
   margin: 0 auto;
@@ -162,7 +194,11 @@ img, svg, iframe { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   gap: 24px;
+  transition: padding 0.4s ease;
 }
+
+/* Espaçador para compensar o header fixed */
+body { padding-top: 65px; }
 
 .marca { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--papel); }
 .marca__glifo {

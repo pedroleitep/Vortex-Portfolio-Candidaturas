@@ -1,0 +1,1032 @@
+<title>Vortex · Campanha 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+/* =========================================================
+   Vortex — deck de apresentação comercial
+   Direção herdada do site: galeria noturna. Fundo breu azulado,
+   âmbar só para ação, rosa só para tempo. A cor forte vem das
+   campanhas — as telas dos sites é que acendem a página.
+   ========================================================= */
+
+:root{
+  --breu:#0a0c16;
+  --breu-2:#10131f;
+  --breu-3:#161a29;
+  --breu-4:#1d2233;
+  --linha:#262c40;
+  --linha-2:#39415c;
+
+  --papel:#f1efe8;
+  --bruma:#9ba3b8;
+  --bruma-2:#6d768f;
+
+  --ambar:#f2a93b;
+  --ambar-esc:#d98f22;
+  --rosa:#ff4a78;
+
+  --display:"Bricolage Grotesque","Archivo",system-ui,sans-serif;
+  --corpo:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+
+  --raio:6px;
+  --raio-g:16px;
+  --sombra:0 30px 60px -30px rgba(0,0,0,.85);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--breu);
+  color:var(--papel);
+  font-family:var(--corpo);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+img{display:block;max-width:100%;}
+::selection{background:var(--ambar);color:#14110a;}
+:focus-visible{outline:2px solid var(--ambar);outline-offset:3px;border-radius:2px;}
+
+/* ---------------- palco ---------------- */
+.palco{position:fixed;inset:0;background:var(--breu);}
+
+.cena{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  padding:clamp(56px,7vh,84px) clamp(20px,4vw,56px) clamp(60px,8vh,88px);
+  overflow-y:auto;overflow-x:hidden;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .38s ease,visibility .38s;
+}
+.cena.is-on{opacity:1;visibility:visible;pointer-events:auto;}
+.cena__interno{margin:auto;width:100%;max-width:1180px;}
+
+/* ---------------- tipografia ---------------- */
+.sobrancelha{
+  margin:0 0 20px;display:inline-flex;align-items:center;gap:10px;
+  font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ambar);
+}
+.sobrancelha::before{content:"";width:22px;height:1px;background:var(--ambar);opacity:.7;}
+.sobrancelha--tempo{color:var(--rosa);}
+.sobrancelha--tempo::before{background:var(--rosa);}
+
+.titulo{
+  margin:0;font-family:var(--display);
+  font-variation-settings:"wdth" 96,"wght" 800,"opsz" 72;
+  font-weight:800;font-size:clamp(30px,4.4vw,60px);line-height:1.03;
+  letter-spacing:-.025em;text-wrap:balance;
+}
+.titulo em{font-style:normal;color:var(--ambar);}
+
+.lead{margin:20px 0 0;max-width:64ch;color:var(--bruma);font-size:clamp(16px,1.35vw,20px);line-height:1.55;}
+.miuda{margin:0;font:500 12px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bruma-2);}
+
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+
+/* ---------------- botões ---------------- */
+.botao{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:14px 24px;border-radius:var(--raio);border:1px solid transparent;
+  font:600 15px/1 var(--corpo);text-decoration:none;cursor:pointer;
+  transition:transform .16s ease,background .16s ease,border-color .16s ease,color .16s ease;
+}
+.botao--acao{background:var(--ambar);color:#14110a;}
+.botao--acao:hover{background:var(--ambar-esc);transform:translateY(-2px);}
+.botao--linha{background:transparent;color:var(--papel);border-color:var(--linha-2);}
+.botao--linha:hover{border-color:var(--ambar);color:var(--ambar);transform:translateY(-2px);}
+
+/* ---------------- exportação (?export na URL) ----------------
+   Usado pelo gerador de PDF: tira o print de cada slide na tela
+   normal, sem a barra de navegação por cima. */
+.exportando .chrome,.exportando .trilho,.exportando .sumario{display:none !important;}
+
+/* ---------------- chrome do deck ---------------- */
+.chrome{position:fixed;left:0;right:0;z-index:20;pointer-events:none;}
+.chrome > *{pointer-events:auto;}
+.chrome--topo{top:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(20px,4vw,56px);}
+.chrome--pe{bottom:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(20px,4vw,56px) 18px;}
+
+.marca{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit;}
+.marca img{width:30px;height:30px;border-radius:7px;}
+.marca b{font-family:var(--display);font-variation-settings:"wght" 800;font-size:16px;letter-spacing:-.01em;line-height:1;}
+.marca i{display:block;font:400 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bruma-2);margin-top:4px;font-style:normal;}
+
+.relogio{display:flex;align-items:baseline;gap:8px;margin:0;}
+.relogio b{font:600 20px/1 var(--mono);color:var(--rosa);font-variant-numeric:tabular-nums;}
+.relogio span{font:400 10px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bruma-2);max-width:11ch;}
+
+.trilho{position:fixed;left:0;right:0;bottom:0;height:3px;background:var(--breu-3);z-index:22;}
+/* escala em vez de largura: a barra é composta, não relayoutizada a cada slide */
+.trilho__preenche{height:100%;width:100%;background:var(--ambar);transform:scaleX(0);transform-origin:left center;transition:transform .38s cubic-bezier(.2,.7,.3,1);}
+
+.nav{display:flex;align-items:center;gap:8px;}
+.nav__b{
+  width:36px;height:36px;display:grid;place-items:center;
+  background:var(--breu-2);border:1px solid var(--linha);border-radius:var(--raio);
+  color:var(--bruma);cursor:pointer;font-size:15px;line-height:1;
+  transition:border-color .16s ease,color .16s ease;
+}
+.nav__b:hover{border-color:var(--ambar);color:var(--ambar);}
+.nav__b[disabled]{opacity:.32;cursor:default;}
+.nav__b[disabled]:hover{border-color:var(--linha);color:var(--bruma);}
+.conta{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--bruma-2);font-variant-numeric:tabular-nums;min-width:52px;text-align:center;}
+.conta b{color:var(--papel);}
+
+.dica{margin:0;font:400 10px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bruma-2);}
+.dica kbd{
+  font:500 10px/1 var(--mono);background:var(--breu-3);border:1px solid var(--linha);
+  border-radius:3px;padding:3px 5px;color:var(--bruma);
+}
+
+/* ---------------- capa ---------------- */
+.capa__grade{display:grid;gap:clamp(24px,4vh,44px);}
+.capa__titulo{
+  margin:0;font-family:var(--display);
+  font-variation-settings:"wdth" 94,"wght" 800,"opsz" 96;
+  font-weight:800;font-size:clamp(38px,6.4vw,86px);line-height:.98;
+  letter-spacing:-.035em;max-width:16ch;
+}
+.capa__titulo em{font-style:normal;color:var(--ambar);}
+.capa__base{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px;}
+.capa__mini{display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,44px);margin:0;}
+.capa__mini div{display:flex;flex-direction:column;gap:6px;}
+.capa__mini dt{font:600 clamp(28px,3.4vw,42px)/1 var(--mono);color:var(--papel);font-variant-numeric:tabular-nums;}
+.capa__mini dd{margin:0;font:400 10px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bruma-2);max-width:14ch;}
+
+.filme{position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);}
+.filme__fita{display:flex;gap:12px;width:max-content;}
+.filme__fita img{
+  width:clamp(120px,13vw,186px);height:auto;border-radius:var(--raio);
+  border:1px solid var(--linha);opacity:.62;
+}
+@media (prefers-reduced-motion:no-preference){
+  .filme__fita{animation:desliza 68s linear infinite;}
+}
+@keyframes desliza{to{transform:translateX(-50%);}}
+
+/* ---------------- cartões genéricos ---------------- */
+.cartoes{display:grid;gap:14px;margin:clamp(24px,4vh,40px) 0 0;padding:0;list-style:none;}
+.cartoes--4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));}
+.cartoes--3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+
+.bloco{
+  background:var(--breu-2);border:1px solid var(--linha);border-radius:var(--raio-g);
+  padding:clamp(18px,2.2vw,26px);display:flex;flex-direction:column;gap:9px;
+}
+.bloco h3{
+  margin:0;font-family:var(--display);font-variation-settings:"wght" 700;
+  font-size:clamp(17px,1.5vw,21px);line-height:1.15;letter-spacing:-.015em;
+}
+.bloco p{margin:0;color:var(--bruma);font-size:15px;line-height:1.5;}
+.bloco__rot{
+  font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--bruma-2);
+}
+
+/* fecho do argumento: standfirst de jornal, separado por fio — não caixa de aviso */
+.remate{
+  margin:clamp(22px,3.4vh,34px) 0 0;padding:18px 0 0;
+  border-top:1px solid var(--linha);
+  font-family:var(--display);font-variation-settings:"wght" 500;
+  font-size:clamp(17px,1.5vw,21px);line-height:1.45;letter-spacing:-.012em;
+  color:var(--papel);max-width:74ch;
+}
+.remate b{color:var(--ambar);font-weight:600;font-variation-settings:"wght" 700;}
+
+/* ---------------- placar ---------------- */
+.placar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--linha);border:1px solid var(--linha);border-radius:var(--raio-g);overflow:hidden;margin:clamp(26px,4vh,44px) 0 0;}
+.placar__item{background:var(--breu-2);padding:clamp(22px,3vw,34px) clamp(16px,2vw,26px);display:flex;flex-direction:column;gap:10px;}
+.placar__item b{font:600 clamp(40px,5.2vw,66px)/.9 var(--mono);color:var(--papel);font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+.placar__item span{font:400 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bruma-2);}
+
+/* ---------------- grade de campanhas ---------------- */
+.obra{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:clamp(20px,3vh,32px) 0 0;padding:0;list-style:none;}
+.obra__item{
+  --cor:var(--ambar);
+  position:relative;background:var(--breu-2);border:1px solid var(--linha);
+  border-radius:var(--raio);overflow:hidden;
+  transition:border-color .18s ease,transform .18s ease;
+}
+.obra__item:hover{border-color:var(--cor);transform:translateY(-3px);}
+.obra__item::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--cor);}
+.obra__item img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;}
+.obra__pe{padding:11px 13px 13px;display:flex;flex-direction:column;gap:5px;}
+.obra__nome{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
+.obra__nome b{font-family:var(--display);font-variation-settings:"wght" 700;font-size:14px;line-height:1.15;letter-spacing:-.01em;}
+.obra__nome span{font:600 12px/1 var(--mono);color:var(--cor);font-variant-numeric:tabular-nums;}
+.obra__meta{margin:0;font:400 9.5px/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--bruma-2);}
+.obra__item--modelo{border-style:dashed;}
+
+/* ---------------- casos ---------------- */
+.casos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:clamp(22px,3.4vh,36px) 0 0;padding:0;list-style:none;}
+.caso{
+  --cor:var(--ambar);
+  background:var(--breu-2);border:1px solid var(--linha);border-radius:var(--raio-g);
+  overflow:hidden;display:flex;flex-direction:column;
+}
+.caso img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;border-bottom:1px solid var(--linha);}
+.caso__corpo{padding:clamp(16px,1.9vw,22px);display:flex;flex-direction:column;gap:9px;flex:1;}
+.caso__papel{font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cor);}
+.caso__nome{margin:0;font-family:var(--display);font-variation-settings:"wght" 700;font-size:clamp(17px,1.5vw,20px);line-height:1.15;letter-spacing:-.015em;}
+.caso__meta{margin:0;font:400 10px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bruma-2);}
+.caso p{margin:0;color:var(--bruma);font-size:14.5px;line-height:1.5;}
+
+/* ---------------- itens de entrega ---------------- */
+.itens{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--linha);border:1px solid var(--linha);border-radius:var(--raio-g);overflow:hidden;margin:clamp(22px,3.4vh,36px) 0 0;padding:0;list-style:none;}
+.item{background:var(--breu-2);padding:clamp(16px,2vw,24px);display:flex;flex-direction:column;gap:8px;}
+.item b{display:flex;align-items:center;gap:9px;font-family:var(--display);font-variation-settings:"wght" 700;font-size:clamp(15px,1.3vw,18px);line-height:1.2;letter-spacing:-.01em;font-weight:700;}
+.item b::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ambar);flex:none;}
+.item span{color:var(--bruma);font-size:14px;line-height:1.5;}
+
+/* ---------------- linha do tempo ---------------- */
+.tempo{margin:clamp(30px,5vh,52px) 0 0;}
+.linha{position:relative;height:2px;background:var(--linha);margin:0 0 74px;}
+.linha__preenche{position:absolute;left:0;top:0;height:100%;background:var(--rosa);opacity:.55;}
+.marco{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:14px;}
+.marco::before{content:"";position:absolute;top:-4px;width:9px;height:9px;border-radius:50%;background:var(--linha-2);border:2px solid var(--breu);}
+.marco b{font:600 13px/1 var(--mono);color:var(--bruma);white-space:nowrap;}
+.marco span{font:400 9.5px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bruma-2);white-space:nowrap;}
+.marco--hoje::before{background:var(--rosa);border-color:var(--breu);width:13px;height:13px;top:-6px;}
+.marco--hoje b{color:var(--rosa);}
+.marco--hoje span{color:var(--rosa);opacity:.75;}
+.marco--ini{transform:translateX(0);align-items:flex-start;}
+.marco--fim{transform:translateX(-100%);align-items:flex-end;}
+
+.contagem{display:flex;flex-wrap:wrap;gap:clamp(20px,3.4vw,48px);align-items:flex-end;margin:0 0 4px;}
+.contagem div{display:flex;flex-direction:column;gap:6px;}
+.contagem b{font:600 clamp(46px,6.4vw,84px)/.88 var(--mono);color:var(--rosa);font-variant-numeric:tabular-nums;letter-spacing:-.03em;}
+.contagem span{font:400 10px/1.35 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bruma-2);max-width:18ch;}
+
+/* ---------------- passos ---------------- */
+.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:clamp(24px,4vh,40px) 0 0;padding:0;list-style:none;counter-reset:p;}
+.passo{
+  background:var(--breu-2);border:1px solid var(--linha);border-radius:var(--raio-g);
+  padding:clamp(20px,2.4vw,28px);display:flex;flex-direction:column;gap:10px;position:relative;
+}
+.passo::before{
+  counter-increment:p;content:counter(p,decimal-leading-zero);
+  font:600 12px/1 var(--mono);letter-spacing:.1em;color:var(--ambar);
+}
+.passo b{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--rosa);}
+.passo h3{margin:0;font-family:var(--display);font-variation-settings:"wght" 700;font-size:clamp(19px,1.8vw,25px);line-height:1.12;letter-spacing:-.02em;}
+.passo p{margin:0;color:var(--bruma);font-size:15px;line-height:1.5;}
+
+/* ---------------- pacote ---------------- */
+.pacote{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,2.2vw,28px);margin:clamp(24px,4vh,40px) 0 0;}
+.painel{background:var(--breu-2);border:1px solid var(--linha);border-radius:var(--raio-g);padding:clamp(20px,2.6vw,30px);display:flex;flex-direction:column;gap:14px;}
+.painel--destaque{border-color:var(--ambar);background:linear-gradient(180deg,rgba(242,169,59,.06),transparent 60%),var(--breu-2);}
+.painel h3{margin:0;font-family:var(--display);font-variation-settings:"wght" 700;font-size:clamp(18px,1.7vw,23px);line-height:1.15;letter-spacing:-.015em;}
+.lista{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;}
+.lista li{display:flex;gap:11px;font-size:15px;line-height:1.5;color:var(--papel);}
+.lista li::before{content:"";flex:none;width:15px;height:15px;margin-top:5px;border-radius:50%;border:1.5px solid var(--ambar);background:radial-gradient(circle,var(--ambar) 0 3px,transparent 3.5px);}
+.lista--sobria li::before{border-color:var(--linha-2);background:radial-gradient(circle,var(--linha-2) 0 3px,transparent 3.5px);}
+.lista--sobria li{color:var(--bruma);}
+
+/* ---------------- fechamento ---------------- */
+.fecho{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;}
+.fecho__titulo{
+  margin:0;font-family:var(--display);font-variation-settings:"wdth" 94,"wght" 800,"opsz" 96;
+  font-weight:800;font-size:clamp(34px,5.4vw,74px);line-height:.98;letter-spacing:-.035em;
+}
+.fecho__botoes{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 0;}
+.contato{display:flex;flex-direction:column;gap:14px;background:var(--breu-2);border:1px solid var(--linha);border-radius:var(--raio-g);padding:clamp(22px,2.8vw,32px);}
+.contato dl{margin:0;display:flex;flex-direction:column;gap:14px;}
+.contato dt{font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bruma-2);margin-bottom:5px;}
+.contato dd{margin:0;font:600 16px/1.35 var(--corpo);word-break:break-word;}
+.contato dd a{color:var(--papel);text-decoration:none;border-bottom:1px solid var(--linha-2);}
+.contato dd a:hover{color:var(--ambar);border-color:var(--ambar);}
+
+/* ---------------- sumário ---------------- */
+.sumario{
+  position:fixed;inset:0;z-index:40;background:rgba(10,12,22,.97);
+  padding:clamp(48px,7vh,80px) clamp(20px,4vw,56px);overflow-y:auto;
+  display:none;
+}
+.sumario.is-on{display:block;}
+.sumario__interno{max-width:1180px;margin:0 auto;}
+.sumario__grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:26px 0 0;padding:0;list-style:none;}
+.sumario__b{
+  width:100%;text-align:left;background:var(--breu-2);border:1px solid var(--linha);
+  border-radius:var(--raio);padding:15px 17px;cursor:pointer;color:var(--papel);
+  display:flex;flex-direction:column;gap:7px;transition:border-color .16s,transform .16s;
+}
+.sumario__b:hover{border-color:var(--ambar);transform:translateY(-2px);}
+.sumario__b.is-on{border-color:var(--ambar);background:var(--breu-3);}
+.sumario__b i{font:500 10px/1 var(--mono);letter-spacing:.14em;color:var(--ambar);font-style:normal;}
+.sumario__b b{font-family:var(--display);font-variation-settings:"wght" 700;font-size:15.5px;line-height:1.2;letter-spacing:-.01em;}
+
+/* ---------------- entrada escalonada ---------------- */
+@media (prefers-reduced-motion:no-preference){
+  .cena.is-on .stag > *{animation:sobe .52s cubic-bezier(.2,.7,.3,1) backwards;}
+  .cena.is-on .stag > *:nth-child(1){animation-delay:70ms;}
+  .cena.is-on .stag > *:nth-child(2){animation-delay:130ms;}
+  .cena.is-on .stag > *:nth-child(3){animation-delay:190ms;}
+  .cena.is-on .stag > *:nth-child(4){animation-delay:250ms;}
+  .cena.is-on .stag > *:nth-child(5){animation-delay:310ms;}
+  .cena.is-on .stag > *:nth-child(6){animation-delay:370ms;}
+  @keyframes sobe{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+}
+
+/* ---------------- tela baixa (projetor 720p, notebook) ----------------
+   O slide precisa caber sem rolagem. Aqui o ritmo vertical encolhe;
+   a hierarquia de tamanhos continua a mesma. */
+@media (max-height:820px){
+  .cena{padding-top:clamp(46px,6vh,62px);padding-bottom:clamp(50px,7vh,68px);}
+
+  .titulo{font-size:clamp(26px,3.6vw,44px);}
+  .lead{margin-top:14px;font-size:clamp(15px,1.2vw,17px);}
+  .sobrancelha{margin-bottom:14px;}
+
+  .capa__grade{gap:clamp(15px,2.4vh,24px);}
+  .capa__titulo{font-size:clamp(34px,5vw,62px);}
+  .capa__mini dt{font-size:clamp(24px,2.8vw,34px);}
+  .filme__fita img{width:clamp(104px,10vw,140px);}
+
+  .cartoes,.placar,.itens,.passos,.pacote,.casos,.obra{margin-top:clamp(14px,2.4vh,24px);}
+  .remate{margin-top:clamp(14px,2.2vh,24px);padding-top:14px;font-size:clamp(16px,1.3vw,19px);}
+  .bloco{padding:16px 18px;gap:7px;}
+  .placar__item{padding:18px 20px;gap:7px;}
+  .placar__item b{font-size:clamp(34px,4.2vw,52px);}
+  .item{padding:14px 16px;gap:6px;}
+  .passo{padding:18px 20px;gap:8px;}
+  .painel{padding:18px 22px;gap:11px;}
+  .lista{gap:9px;}
+
+  .obra__item img{aspect-ratio:16/9;}
+  .obra__pe{padding:9px 11px 11px;gap:4px;}
+  .caso img{aspect-ratio:16/9;}
+  .caso__corpo{padding:14px 16px;gap:7px;}
+
+  .tempo{margin-top:clamp(18px,3vh,32px);}
+  .linha{margin-bottom:66px;}
+  .contagem b{font-size:clamp(38px,5vw,64px);}
+  .fecho__botoes{margin-top:20px;}
+  .contato{padding:20px 22px;}
+}
+
+/* ---------------- responsivo ---------------- */
+@media (max-width:1020px){
+  .obra{grid-template-columns:repeat(2,1fr);}
+  .casos,.itens,.passos{grid-template-columns:repeat(2,1fr);}
+  .pacote,.fecho{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+  body{font-size:16px;}
+  .cena{padding:76px 18px 92px;}
+  .obra,.casos,.itens,.passos{grid-template-columns:1fr;}
+  .chrome--topo .relogio{display:none;}
+  .dica{display:none;}
+  .capa__titulo{font-size:clamp(30px,9vw,44px);}
+}
+
+/* ---------------- impressão / PDF (Ctrl+P manual) ----------------
+   Página do tamanho do slide (1280×720, o mesmo breakpoint testado sem
+   rolagem) em vez de A4: papel A4 corta conteúdo denso em duas páginas.
+
+   O !important nas colunas é necessário: ao imprimir, o Chrome calcula
+   `max-width` contra uma largura de layout diferente da folha declarada
+   em @page, então a grade "estreita" (@media max-width:1020px, mais
+   abaixo neste arquivo) reaparece por engano e cai pra 2 colunas mesmo
+   numa página de 1280px. Reafirmar a versão larga aqui vence a disputa
+   de especificidade sem depender de acertar essa largura.
+
+   Para o PDF gerado pelo botão/relatório oficial, prefira
+   ferramentas/gerar-pdf.py: ele tira print da tela normal (sem essa
+   ambiguidade) em vez de depender deste bloco. */
+@media print{
+  @page{size:1280px 720px;margin:0;}
+  html,body{height:auto;overflow:visible;background:var(--breu);}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .palco{position:static;}
+  .chrome,.trilho,.sumario{display:none !important;}
+  .cena{
+    position:static;opacity:1;visibility:visible;pointer-events:auto;
+    break-after:page;page-break-after:always;
+    width:1280px;height:720px;overflow:hidden;
+  }
+  .cena:last-child{break-after:auto;page-break-after:auto;}
+  .filme__fita{animation:none;}
+
+  .obra{grid-template-columns:repeat(4,1fr) !important;}
+  .casos,.itens,.passos{grid-template-columns:repeat(3,1fr) !important;}
+  .pacote{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;}
+  .fecho{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) !important;}
+}
+</style>
+
+<div class="palco">
+
+  <!-- ============ 1. CAPA ============ -->
+  <section class="cena is-on" data-cena data-rot="Capa" aria-label="Capa">
+    <div class="cena__interno">
+      <div class="capa__grade stag">
+        <p class="sobrancelha">Sites de campanha · Eleições 2026</p>
+        <h1 class="capa__titulo">Todo candidato tem uma história pra contar. <em>A questão é onde ela vai ser contada.</em></h1>
+        <div class="capa__base">
+          <p class="lead" style="margin:0;max-width:46ch;">A Vortex constrói o endereço da campanha: site próprio, no ar em dias, com a trajetória, as propostas e as entregas no lugar certo.</p>
+          <dl class="capa__mini">
+            <div><dt>7</dt><dd>campanhas no ar</dd></div>
+            <div><dt>4</dt><dd>estados</dd></div>
+            <div><dt class="num" data-dias-1t>—</dt><dd>dias até o 1º turno</dd></div>
+          </dl>
+        </div>
+        <div class="filme"><div class="filme__fita" data-filme></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. O PROBLEMA ============ -->
+  <section class="cena" data-cena data-rot="O diagnóstico" aria-label="O diagnóstico" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha">O diagnóstico</p>
+      <h2 class="titulo">Hoje a sua campanha mora em <em>terreno alugado</em>.</h2>
+      <ul class="cartoes cartoes--4">
+        <li class="bloco">
+          <span class="bloco__rot">Instagram</span>
+          <h3>O alcance não é seu</h3>
+          <p>Quem decide quantos eleitores veem o post é o algoritmo. Hoje entrega, amanhã não entrega.</p>
+        </li>
+        <li class="bloco">
+          <span class="bloco__rot">WhatsApp</span>
+          <h3>A mensagem some</h3>
+          <p>Passa no grupo, desce a tela e acabou. Ninguém rola cinquenta mensagens pra achar a sua proposta.</p>
+        </li>
+        <li class="bloco">
+          <span class="bloco__rot">Santinho</span>
+          <h3>Dura um dia</h3>
+          <p>Custa caro, cabe meia frase e no dia seguinte está no chão. Não segura uma trajetória de mandato.</p>
+        </li>
+        <li class="bloco">
+          <span class="bloco__rot">Busca</span>
+          <h3>O Google não te acha</h3>
+          <p>O eleitor ouve seu nome no rádio, procura e encontra notícia de terceiro — nunca a sua versão.</p>
+        </li>
+      </ul>
+      <p class="remate">O site é o único endereço da campanha que é <b>seu</b>. Abre 24 horas, cabe no link da bio, no QR do santinho e no story — e continua lá quando a rede social muda a regra.</p>
+    </div>
+  </section>
+
+  <!-- ============ 3. A TESE ============ -->
+  <section class="cena" data-cena data-rot="A tese" aria-label="A tese" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha">A tese</p>
+      <h2 class="titulo">O site não é panfleto.<br />É a <em>sede</em> da campanha.</h2>
+      <p class="lead">Tudo o que a campanha dispara — rádio, rua, story, santinho, comitê — precisa apontar para um lugar só. Esse lugar tem três funções que nenhuma rede social faz.</p>
+      <ul class="cartoes cartoes--3">
+        <li class="bloco">
+          <span class="bloco__rot">Função 1</span>
+          <h3>Onde a história cabe inteira</h3>
+          <p>Origem, profissão, mandatos, leis, obras e entregas. Uma vida pública não cabe num card — cabe numa linha do tempo.</p>
+        </li>
+        <li class="bloco">
+          <span class="bloco__rot">Função 2</span>
+          <h3>Onde o número gruda</h3>
+          <p>Nome e número abrem a capa e voltam em cada seção — na trajetória, nas propostas, no rodapé. Repetição sem precisar de truque.</p>
+        </li>
+        <li class="bloco">
+          <span class="bloco__rot">Função 3</span>
+          <h3>Onde tudo converge</h3>
+          <p>Um endereço só para divulgar em toda peça. Muda o conteúdo, muda a agenda — o endereço continua o mesmo até a eleição.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 4. PLACAR ============ -->
+  <section class="cena" data-cena data-rot="A prova" aria-label="A prova" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha">A prova</p>
+      <h2 class="titulo">Não é portfólio de conceito.<br />Está <em>tudo no ar</em> agora.</h2>
+      <div class="placar">
+        <div class="placar__item"><b>7</b><span>campanhas no ar</span></div>
+        <div class="placar__item"><b>4</b><span>estados atendidos</span></div>
+        <div class="placar__item"><b>4</b><span>cargos disputados</span></div>
+        <div class="placar__item"><b>7</b><span>partidos diferentes</span></div>
+        <div class="placar__item"><b>1</b><span>modelo pronto pra virar o seu</span></div>
+      </div>
+      <p class="remate">De deputado estadual a governo do estado, em quatro estados e sete partidos. O mesmo padrão de construção — o que muda é a identidade, a história e o número.</p>
+    </div>
+  </section>
+
+  <!-- ============ 5. A OBRA ============ -->
+  <section class="cena" data-cena data-rot="A obra" aria-label="A obra" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha">A obra</p>
+      <h2 class="titulo">Tudo o que já está no ar</h2>
+      <ul class="obra" data-obra></ul>
+      <p class="miuda" style="margin-top:18px;">Cada imagem é a tela de abertura real do site. Nomes, números e conteúdos pertencem às campanhas atendidas · Ana Marques é o modelo base da casa.</p>
+    </div>
+  </section>
+
+  <!-- ============ 6. CASOS ============ -->
+  <section class="cena" data-cena data-rot="Três casos" aria-label="Três casos" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha">Três casos</p>
+      <h2 class="titulo">Um padrão, <em>três trabalhos diferentes</em></h2>
+      <p class="lead">A estrutura é a mesma. O que cada campanha precisava provar é que muda — e é isso que decide a ordem das seções.</p>
+      <ul class="casos" data-casos></ul>
+    </div>
+  </section>
+
+  <!-- ============ 7. O QUE VEM NO SITE ============ -->
+  <section class="cena" data-cena data-rot="Padrão da casa" aria-label="O que vem no site" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha">Padrão da casa</p>
+      <h2 class="titulo">O que vem em <em>toda</em> campanha</h2>
+      <p class="lead">Não é tema comprado nem página de bloco. É o mesmo conjunto de peças em todas as campanhas do slide anterior.</p>
+      <ul class="itens" data-itens></ul>
+    </div>
+  </section>
+
+  <!-- ============ 9. O RELÓGIO ============ -->
+  <section class="cena" data-cena data-rot="O relógio" aria-label="O relógio da eleição" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha sobrancelha--tempo">O relógio da eleição</p>
+      <h2 class="titulo">A janela é curta<br />e <em>já abriu</em>.</h2>
+      <div class="contagem">
+        <div><b class="num" data-dias-1t>—</b><span>dias até o 1º turno</span></div>
+        <div><b class="num" data-dias-2t>—</b><span>dias até um eventual 2º turno</span></div>
+      </div>
+      <div class="tempo">
+        <div class="linha" data-linha></div>
+      </div>
+      <p class="remate">A propaganda eleitoral está liberada desde <b>16 de agosto</b> e o primeiro turno é em <b>4 de outubro</b>. Site que entra no ar em setembro perde metade da campanha — e a metade que perde é justamente a que forma opinião.</p>
+    </div>
+  </section>
+
+  <!-- ============ 10. COMO FUNCIONA ============ -->
+  <section class="cena" data-cena data-rot="Como funciona" aria-label="Como funciona" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha">Como funciona</p>
+      <h2 class="titulo">Da conversa ao site no ar</h2>
+      <ol class="passos">
+        <li class="passo">
+          <b>Trinta minutos</b>
+          <h3>Conversa</h3>
+          <p>Número, cargo, história e o que já foi entregue no mandato. Sem formulário de agência e sem briefing de vinte páginas.</p>
+        </li>
+        <li class="passo">
+          <b>Em 5 dias</b>
+          <h3>Estrutura no ar</h3>
+          <p>Você recebe o link da primeira versão para revisar com a sua equipe, no seu celular, antes de qualquer divulgação.</p>
+        </li>
+        <li class="passo">
+          <b>Até o dia da eleição</b>
+          <h3>Campanha viva</h3>
+          <p>Conteúdo novo, seção nova, agenda nova. O site acompanha a campanha em vez de envelhecer nela.</p>
+        </li>
+      </ol>
+      <p class="remate">Você não vira administrador de site no meio da campanha. Manda o material pelo WhatsApp; a alteração entra no ar do nosso lado.</p>
+    </div>
+  </section>
+
+  <!-- ============ 11. O PACOTE ============ -->
+  <section class="cena" data-cena data-rot="O pacote" aria-label="O pacote" hidden>
+    <div class="cena__interno stag">
+      <p class="sobrancelha">O que você contrata</p>
+      <h2 class="titulo">O pacote — e como ele <em>entra na prestação de contas</em></h2>
+      <div class="pacote">
+        <div class="painel painel--destaque">
+          <h3>Vem no site</h3>
+          <ul class="lista">
+            <li>Site completo e responsivo, com domínio próprio e HTTPS</li>
+            <li>Nome e número do candidato em destaque em toda a página</li>
+            <li>Trajetória, propostas e entregas do mandato</li>
+            <li>WhatsApp, redes e formulário de apoio</li>
+            <li>Prévia de compartilhamento pronta pro grupo e pro story</li>
+            <li>Hospedagem e ajustes durante toda a campanha</li>
+          </ul>
+        </div>
+        <div class="painel">
+          <h3>Como é a contratação</h3>
+          <ul class="lista lista--sobria">
+            <li>Contratação por campanha, com CNPJ de campanha</li>
+            <li>Nota fiscal emitida — do jeito que entra na prestação de contas ao TSE</li>
+            <li>Primeira versão no ar em 5 dias a contar da conversa</li>
+            <li>Domínio, certificado e hospedagem inclusos na entrega</li>
+            <li>Ajustes ilimitados até o dia da eleição, sem cobrança por alteração</li>
+            <li>Investimento fechado na conversa, conforme cargo e escopo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 12. FECHAMENTO ============ -->
+  <section class="cena" data-cena data-rot="Próximo passo" aria-label="Próximo passo" hidden>
+    <div class="cena__interno">
+      <div class="fecho stag">
+        <div>
+          <p class="sobrancelha">Próximo passo</p>
+          <h2 class="fecho__titulo">Manda o número.<br />A gente devolve <em style="font-style:normal;color:var(--ambar);">o site</em>.</h2>
+          <p class="lead">Número, cargo, estado e o que já foi entregue no mandato. Com isso montamos a estrutura da página e mostramos antes de você decidir qualquer coisa.</p>
+          <div class="fecho__botoes">
+            <a class="botao botao--acao" data-zap href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+            <a class="botao botao--linha" data-email href="#">Mandar e-mail</a>
+          </div>
+        </div>
+        <div class="contato">
+          <dl>
+            <div>
+              <dt>WhatsApp</dt>
+              <dd><a data-zap href="#" target="_blank" rel="noopener">(37) 98827-1126</a></dd>
+            </div>
+            <div>
+              <dt>E-mail</dt>
+              <dd><a data-email href="#">v0rtexangency@gmail.com</a></dd>
+            </div>
+            <div>
+              <dt>Portfólio ao vivo</dt>
+              <dd><a href="https://vortex-portfolio-candidaturas.vercel.app/" target="_blank" rel="noopener">vortex-portfolio-candidaturas.vercel.app</a></dd>
+            </div>
+            <div>
+              <dt>Restam</dt>
+              <dd style="color:var(--rosa);"><span class="num" data-dias-1t>—</span> dias até o 1º turno</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ CHROME ============ -->
+<div class="chrome chrome--topo">
+  <a class="marca" href="#" data-ir-capa>
+    <img src="__IMG_marca__" alt="" width="512" height="512" />
+    <span><b>Vortex</b><i>sites de campanha</i></span>
+  </a>
+  <p class="relogio"><b class="num" data-dias-1t>—</b><span>dias até 4 de outubro</span></p>
+</div>
+
+<div class="chrome chrome--pe">
+  <p class="dica"><kbd>←</kbd> <kbd>→</kbd> navegar · <kbd>S</kbd> sumário · <kbd>F</kbd> tela cheia</p>
+  <div class="nav">
+    <button class="nav__b" type="button" data-sumario aria-label="Abrir sumário">☰</button>
+    <button class="nav__b" type="button" data-antes aria-label="Slide anterior">‹</button>
+    <p class="conta"><b data-atual>1</b> / <span data-total>12</span></p>
+    <button class="nav__b" type="button" data-depois aria-label="Próximo slide">›</button>
+  </div>
+</div>
+
+<div class="trilho"><div class="trilho__preenche" data-preenche></div></div>
+
+<!-- ============ SUMÁRIO ============ -->
+<div class="sumario" data-painel-sumario role="dialog" aria-modal="true" aria-label="Sumário da apresentação">
+  <div class="sumario__interno">
+    <p class="sobrancelha">Sumário</p>
+    <h2 class="titulo">Ir direto para</h2>
+    <ul class="sumario__grade" data-sumario-grade></ul>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   Dados — espelham CONFIG e PROJETOS do site
+   ========================================================= */
+const CONFIG = {
+  whatsapp: "5537988271126",
+  mensagemZap: "Olá! Vi a apresentação da Vortex e quero falar sobre o site da minha candidatura.",
+  email: "v0rtexangency@gmail.com",
+  assuntoEmail: "Site de campanha — Eleições 2026",
+  inicioPropaganda: "2026-08-16",
+  primeiroTurno: "2026-10-04",
+  segundoTurno: "2026-10-25",
+};
+
+const CAMPANHAS = [
+  { id:"fabio", nome:"Fábio Trad", numero:"13", cargo:"Governo do Estado", uf:"MS", estado:"Mato Grosso do Sul", partido:"PT", cor:"#E01B3C", url:"https://fabiotrad13.com.br/",
+    nota:"Chapa majoritária com vice: apresentação em vídeo, trajetória no Congresso e galeria de rua com a militância." },
+  { id:"aurea", nome:"Áurea Carolina", numero:"500", cargo:"Senado Federal", uf:"MG", estado:"Minas Gerais", partido:"PSOL", cor:"#FAC400", url:"https://lp-aurea-carolina.vercel.app/",
+    nota:"Campanha majoritária ao Senado: tipografia pesada, bordões em movimento e uma página de bandeiras que sustenta o discurso." },
+  { id:"bruno", nome:"Dr. Bruno Resende", numero:"4400", cargo:"Deputado Federal", uf:"ES", estado:"Espírito Santo", partido:"União Brasil", cor:"#E8447F", url:"https://lp-bruno-resende.vercel.app/",
+    nota:"Médico oncologista, primeiro mandato estadual. Ensaio de voto, trajetória da roça ao plenário e as entregas do mandato em números." },
+  { id:"igor", nome:"Igor Eto", numero:"7077", cargo:"Deputado Federal", uf:"MG", estado:"Minas Gerais", partido:"Avante", cor:"#FFD740", url:"https://igoreto7077.com.br/",
+    nota:"Pauta econômica explicada em desenho: como o imposto sai da sua mão e volta, mais as pautas de cada região de Minas." },
+  { id:"angela", nome:"Ângela Águida Portella", numero:"11120", cargo:"Deputada Estadual", uf:"RR", estado:"Roraima", partido:"PP", cor:"#FE00B0", url:"https://lp-angela-aguida.vercel.app/",
+    nota:"Quarto mandato: contadores de leis em vigor e uma seção inteira para o TEAMARR, o centro de acolhimento ao autista que ela criou." },
+  { id:"jacqueline", nome:"Jacqueline Moraes", numero:"40400", cargo:"Deputada Estadual", uf:"ES", estado:"Espírito Santo", partido:"PSB", cor:"#F1862A", url:"https://jacquelinemoraes.com/",
+    nota:"Da camelô à candidata: a história pessoal é o eixo do site inteiro. No ar em domínio próprio, jacquelinemoraes.com." },
+  { id:"zereis", nome:"Zé Reis", numero:"20456", cargo:"Deputado Estadual", uf:"MG", estado:"Minas Gerais", partido:"Podemos", cor:"#2B62E8", url:"https://zereis.com.br/",
+    nota:"Norte de Minas: compromissos assumidos um a um, vídeos da estrada e agenda de quem vive rodando o interior." },
+  { id:"modelo", nome:"Ana Marques", numero:"15300", cargo:"Modelo base", uf:"—", estado:"Candidata fictícia", partido:"demonstração", cor:"#7C8B5E", url:"https://candidato-template.vercel.app/",
+    nota:"O esqueleto da casa, com dados fictícios. É daqui que sai o site da sua campanha.", modelo:true },
+];
+
+const TELAS = {
+  fabio:"__IMG_fabio__", aurea:"__IMG_aurea__", bruno:"__IMG_bruno__", igor:"__IMG_igor__",
+  angela:"__IMG_angela__", jacqueline:"__IMG_jacqueline__", zereis:"__IMG_zereis__", modelo:"__IMG_modelo__",
+};
+
+const CASOS = [
+  { id:"fabio", papel:"Escala majoritária",
+    texto:"Governo do estado é a maior superfície: chapa com vice, vídeo de apresentação e uma trajetória de Congresso pra sustentar. O site abre no vídeo e desce pra prova." },
+  { id:"jacqueline", papel:"A história é o argumento",
+    texto:"Da camelô à candidata. Quando a biografia é o principal ativo, ela vira o eixo do site inteiro — e não uma seção “sobre” no rodapé." },
+  { id:"angela", papel:"Mandato longo, prova em número",
+    texto:"Quarto mandato pede contador de leis em vigor e uma seção inteira pro TEAMARR, o centro de acolhimento ao autista que ela criou." },
+];
+
+const ITENS = [
+  ["Selo de responsabilidade", "Rodapé com quem pagou o material e o CNPJ da campanha, do jeito que a lei exige."],
+  ["Trajetória em linha do tempo","A história por etapas: origem, profissão, mandatos e o que vem agora."],
+  ["Mandato em números","Leis, votos, municípios e obras em contadores que sobem na rolagem."],
+  ["Propostas por eixo","Cada bandeira com espaço próprio, em linguagem de gente."],
+  ["Galeria e vídeos","Rua, plenária e apresentação em vídeo, leve mesmo em rede fraca."],
+  ["Fale com a campanha","WhatsApp, redes e formulário de apoio, sem plugin de terceiro."],
+  ["Prévia de compartilhamento","Título, texto e imagem prontos pro link cair bonito no grupo."],
+  ["Domínio próprio e HTTPS","seunome.com.br no ar, com certificado e hospedagem inclusos."],
+  ["Celular primeiro","Contraste, teclado e leitor de tela testados. O eleitorado abre pelo celular."],
+];
+
+/* =========================================================
+   utilidades
+   ========================================================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+function dataLocal(iso){ const [a,m,d] = iso.split("-").map(Number); return new Date(a, m-1, d); }
+function diasAte(iso){ const h = new Date(); h.setHours(0,0,0,0); return Math.max(0, Math.ceil((dataLocal(iso) - h) / 86400000)); }
+function porExtenso(iso){ return dataLocal(iso).toLocaleDateString("pt-BR", { day:"2-digit", month:"2-digit" }); }
+
+/* =========================================================
+   contato e contagem
+   ========================================================= */
+function aplicarConfig(){
+  const zap = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(CONFIG.mensagemZap);
+  $$("[data-zap]").forEach(a => { a.href = zap; });
+  $$("[data-email]").forEach(a => { a.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(CONFIG.assuntoEmail); });
+
+  const d1 = diasAte(CONFIG.primeiroTurno), d2 = diasAte(CONFIG.segundoTurno);
+  $$("[data-dias-1t]").forEach(n => n.textContent = d1);
+  $$("[data-dias-2t]").forEach(n => n.textContent = d2);
+}
+
+/* =========================================================
+   capa — filme de telas
+   ========================================================= */
+function montarFilme(){
+  const fita = $("[data-filme]");
+  if (!fita) return;
+  const um = () => CAMPANHAS.map(p => {
+    const img = document.createElement("img");
+    img.src = TELAS[p.id];
+    img.alt = "";
+    img.loading = "eager";
+    img.decoding = "async";
+    return img;
+  });
+  um().forEach(i => fita.appendChild(i));
+  um().forEach(i => fita.appendChild(i));
+}
+
+/* =========================================================
+   grade da obra
+   ========================================================= */
+function montarObra(){
+  const alvo = $("[data-obra]");
+  if (!alvo) return;
+  CAMPANHAS.forEach(p => {
+    const li = document.createElement("li");
+    li.className = "obra__item" + (p.modelo ? " obra__item--modelo" : "");
+    li.style.setProperty("--cor", p.cor);
+
+    const a = document.createElement("a");
+    a.href = p.url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.style.cssText = "display:block;color:inherit;text-decoration:none;";
+
+    const img = document.createElement("img");
+    img.src = TELAS[p.id];
+    img.alt = "Tela de abertura do site de " + p.nome;
+    img.loading = "lazy";
+    img.decoding = "async";
+
+    const pe = document.createElement("div");
+    pe.className = "obra__pe";
+    pe.innerHTML = '<div class="obra__nome"><b></b><span class="num"></span></div><p class="obra__meta"></p>';
+    pe.querySelector("b").textContent = p.nome;
+    pe.querySelector("span").textContent = p.numero;
+    pe.querySelector(".obra__meta").textContent =
+      p.cargo + " · " + (p.uf === "—" ? p.estado : p.uf) + (p.partido ? " · " + p.partido : "");
+
+    a.appendChild(img);
+    a.appendChild(pe);
+    li.appendChild(a);
+    alvo.appendChild(li);
+  });
+}
+
+/* =========================================================
+   casos em destaque
+   ========================================================= */
+function montarCasos(){
+  const alvo = $("[data-casos]");
+  if (!alvo) return;
+  CASOS.forEach(c => {
+    const p = CAMPANHAS.find(x => x.id === c.id);
+    const li = document.createElement("li");
+    li.className = "caso";
+    li.style.setProperty("--cor", p.cor);
+
+    const img = document.createElement("img");
+    img.src = TELAS[p.id];
+    img.alt = "Tela de abertura do site de " + p.nome;
+    img.loading = "lazy";
+    img.decoding = "async";
+
+    const corpo = document.createElement("div");
+    corpo.className = "caso__corpo";
+    corpo.innerHTML = '<span class="caso__papel"></span><h3 class="caso__nome"></h3><p class="caso__meta"></p><p></p>';
+    corpo.querySelector(".caso__papel").textContent = c.papel;
+    corpo.querySelector(".caso__nome").textContent = p.nome;
+    corpo.querySelector(".caso__meta").textContent = p.cargo + " · " + p.estado + " · " + p.partido;
+    corpo.querySelectorAll("p")[1].textContent = c.texto;
+
+    li.appendChild(img);
+    li.appendChild(corpo);
+    alvo.appendChild(li);
+  });
+}
+
+/* =========================================================
+   itens de entrega
+   ========================================================= */
+function montarItens(){
+  const alvo = $("[data-itens]");
+  if (!alvo) return;
+  ITENS.forEach(([t, d]) => {
+    const li = document.createElement("li");
+    li.className = "item";
+    li.innerHTML = "<b></b><span></span>";
+    li.querySelector("b").textContent = t;
+    li.querySelector("span").textContent = d;
+    alvo.appendChild(li);
+  });
+}
+
+/* =========================================================
+   linha do tempo eleitoral
+   ========================================================= */
+function montarLinha(){
+  const linha = $("[data-linha]");
+  if (!linha) return;
+
+  const ini = dataLocal(CONFIG.inicioPropaganda).getTime();
+  const fim = dataLocal(CONFIG.segundoTurno).getTime();
+  const hoje = Date.now();
+  const pos = t => Math.min(100, Math.max(0, ((t - ini) / (fim - ini)) * 100));
+
+  linha.innerHTML = "";
+  const preenche = document.createElement("div");
+  preenche.className = "linha__preenche";
+  preenche.style.width = pos(hoje) + "%";
+  linha.appendChild(preenche);
+
+  const marcos = [
+    { t: ini, rot: porExtenso(CONFIG.inicioPropaganda), leg: "propaganda liberada" },
+    { t: hoje, rot: "hoje", leg: "você está aqui", agora: true },
+    { t: dataLocal(CONFIG.primeiroTurno).getTime(), rot: porExtenso(CONFIG.primeiroTurno), leg: "1º turno" },
+    { t: fim, rot: porExtenso(CONFIG.segundoTurno), leg: "2º turno" },
+  ];
+
+  marcos.forEach(m => {
+    const x = pos(m.t);
+    const el = document.createElement("div");
+    el.className = "marco" + (m.agora ? " marco--hoje" : "") + (x <= 1 ? " marco--ini" : "") + (x >= 99 ? " marco--fim" : "");
+    el.style.left = x + "%";
+    el.innerHTML = "<b></b><span></span>";
+    el.querySelector("b").textContent = m.rot;
+    el.querySelector("span").textContent = m.leg;
+    linha.appendChild(el);
+  });
+}
+
+/* =========================================================
+   navegação do deck
+   ========================================================= */
+const cenas = $$("[data-cena]");
+let atual = 0;
+let emSumario = false;
+
+function ir(i, foco){
+  const novo = Math.min(cenas.length - 1, Math.max(0, i));
+  if (novo === atual && foco !== "forcar") { pintarChrome(); return; }
+  cenas[atual].classList.remove("is-on");
+  cenas[atual].hidden = true;
+  atual = novo;
+  cenas[atual].hidden = false;
+  // reflow para reiniciar a animação de entrada
+  void cenas[atual].offsetWidth;
+  cenas[atual].classList.add("is-on");
+  cenas[atual].scrollTop = 0;
+  history.replaceState(null, "", "#" + (atual + 1));
+  pintarChrome();
+}
+
+function pintarChrome(){
+  $("[data-atual]").textContent = atual + 1;
+  $("[data-preenche]").style.transform = "scaleX(" + ((atual + 1) / cenas.length) + ")";
+  $("[data-antes]").disabled = atual === 0;
+  $("[data-depois]").disabled = atual === cenas.length - 1;
+  $$(".sumario__b").forEach((b, i) => b.classList.toggle("is-on", i === atual));
+}
+
+function montarSumario(){
+  const grade = $("[data-sumario-grade]");
+  cenas.forEach((c, i) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "sumario__b";
+    b.innerHTML = "<i></i><b></b>";
+    b.querySelector("i").textContent = String(i + 1).padStart(2, "0");
+    b.querySelector("b").textContent = c.dataset.rot;
+    b.addEventListener("click", () => { alternarSumario(false); ir(i); });
+    li.appendChild(b);
+    grade.appendChild(li);
+  });
+}
+
+function alternarSumario(abrir){
+  emSumario = abrir === undefined ? !emSumario : abrir;
+  $("[data-painel-sumario]").classList.toggle("is-on", emSumario);
+}
+
+function telaCheia(){
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+}
+
+function montarNav(){
+  $("[data-antes]").addEventListener("click", () => ir(atual - 1));
+  $("[data-depois]").addEventListener("click", () => ir(atual + 1));
+  $("[data-sumario]").addEventListener("click", () => alternarSumario());
+  $("[data-ir-capa]").addEventListener("click", e => { e.preventDefault(); ir(0); });
+  $("[data-painel-sumario]").addEventListener("click", e => {
+    if (e.target === $("[data-painel-sumario]")) alternarSumario(false);
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+    if (e.key === "Escape"){ alternarSumario(false); return; }
+    if (emSumario && e.key !== "s" && e.key !== "S") return;
+
+    switch(e.key){
+      case "ArrowRight": case "PageDown": case " ": e.preventDefault(); ir(atual + 1); break;
+      case "ArrowLeft": case "PageUp": e.preventDefault(); ir(atual - 1); break;
+      case "Home": e.preventDefault(); ir(0); break;
+      case "End": e.preventDefault(); ir(cenas.length - 1); break;
+      case "s": case "S": e.preventDefault(); alternarSumario(); break;
+      case "f": case "F": e.preventDefault(); telaCheia(); break;
+    }
+  });
+
+  // arrastar no celular
+  let x0 = null;
+  const palco = $(".palco");
+  palco.addEventListener("touchstart", e => { x0 = e.changedTouches[0].clientX; }, { passive:true });
+  palco.addEventListener("touchend", e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) ir(atual + (dx < 0 ? 1 : -1));
+    x0 = null;
+  }, { passive:true });
+}
+
+/* =========================================================
+   início
+   ========================================================= */
+function iniciar(){
+  if (new URLSearchParams(location.search).has("export")) {
+    document.body.classList.add("exportando");
+  }
+  $("[data-total]").textContent = cenas.length;
+  cenas.forEach((c, i) => { c.hidden = i !== 0; });
+  aplicarConfig();
+  montarFilme();
+  montarObra();
+  montarCasos();
+  montarItens();
+  montarLinha();
+  montarSumario();
+  montarNav();
+
+  const alvo = parseInt((location.hash || "").slice(1), 10);
+  if (alvo >= 1 && alvo <= cenas.length) ir(alvo - 1, "forcar");
+  else pintarChrome();
+}
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar);
+else iniciar();
+</script>

@@ -507,8 +507,29 @@ function montarVisor() {
 /* ---------------------------------------------------------
    início
    --------------------------------------------------------- */
+/* ---------------------------------------------------------
+   navbar pílula
+   --------------------------------------------------------- */
+function montarNavPilula() {
+  const topo = $("header.topo");
+  if (!topo) return;
+
+  // Usa IntersectionObserver na própria capa: quando ela sair da viewport
+  // (scrollou para baixo) ativa a pílula; quando volta, desfaz.
+  const sentinel = document.createElement("div");
+  sentinel.style.cssText = "position:absolute;top:80px;height:1px;width:1px;pointer-events:none;";
+  document.body.prepend(sentinel);
+
+  const obs = new IntersectionObserver(
+    ([entry]) => topo.classList.toggle("is-pill", !entry.isIntersecting),
+    { threshold: 0 }
+  );
+  obs.observe(sentinel);
+}
+
 function iniciar() {
   aplicarConfig();
+  montarNavPilula();
   montarParede();
   montarFaixa();
   montarFiltros();

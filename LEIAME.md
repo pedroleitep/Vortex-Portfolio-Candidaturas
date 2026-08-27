@@ -123,6 +123,65 @@ npx vercel --prod
 Ou arrastar a pasta em vercel.com/new. Framework: **Other**. Build command: vazio.
 Output directory: a própria raiz.
 
+## Apresentação comercial
+
+Deck de 11 slides para apresentar o serviço ao candidato, no ar em
+`/apresentacao/`. Mesma direção do site: breu, âmbar para ação, rosa para tempo.
+
+```
+ferramentas/apresentacao-fonte.html   fonte que se edita (HTML, CSS e JS)
+ferramentas/gerar-apresentacao.py     embute as imagens e gera as saídas
+ferramentas/gerar-pdf.py              tira print de cada slide e junta num PDF
+apresentacao/index.html               página autônoma publicada com o site
+apresentacao/deck.html                mesmo conteúdo sem <html>/<head>/<body>
+apresentacao/vortex-apresentacao.pdf  gerado — não editar à mão
+```
+
+Editar sempre a **fonte** e depois rodar:
+
+```bash
+python ferramentas/gerar-apresentacao.py
+```
+
+O script troca os marcadores `__IMG_<id>__` pelas imagens de `ativos/` em data
+URI. Por isso o deck abre sem rede — o que importa numa sala com Wi-Fi ruim — ao
+custo de ~900 KB por arquivo. As saídas são geradas: não editar à mão.
+
+Roteiro: capa · diagnóstico · tese · placar · a obra · três casos · padrão da
+casa · relógio da eleição · como funciona · o pacote · fechamento.
+
+Ao apresentar:
+
+| Tecla | O que faz |
+|---|---|
+| `←` `→` `espaço` | passar slide |
+| `S` | sumário, para pular direto |
+| `F` | tela cheia |
+
+Não tem simulador de urna: a legislação eleitoral proíbe reproduzir a interface
+da urna eletrônica em material de campanha (Lei 9.504/1997 e resoluções do TSE).
+O deck já teve um slide assim e foi removido — cuidado ao reintroduzir qualquer
+peça que imite tela, teclado ou fluxo de voto da urna oficial.
+
+Para gerar o PDF (um slide por página, sem a barra de navegação):
+
+```bash
+python ferramentas/gerar-apresentacao.py
+python ferramentas/gerar-pdf.py
+```
+
+`gerar-pdf.py` tira o print de cada slide com o Chrome headless, na mesma
+resolução testada sem rolagem (1280×720), e junta as páginas com o Pillow —
+por isso precisa do Chrome instalado e do `pip install pillow`. `Ctrl+P` no
+navegador também funciona como atalho manual, mas é o motor de impressão do
+Chrome que decide o layout; ele calcula `vw`/`vh` e os breakpoints de largura
+contra um viewport diferente do tamanho de página declarado, então prefira o
+script para qualquer PDF que vá sair de casa.
+
+Os dados do deck (campanhas, contato, datas) estão duplicados no topo do
+`<script>` da fonte. Ao acrescentar uma campanha em `ativos/app.js`, acrescentar
+também em `ferramentas/apresentacao-fonte.html` e rodar o script de novo.
+
 ## Acessibilidade e desempenho
 
 - Contraste alto, foco visível em âmbar, `prefers-reduced-motion` respeitado
