@@ -4,12 +4,12 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0A0C16" />
-<title>Primeiro Turno · Sites de campanha para as Eleições 2026</title>
+<title>Vortex · Sites de campanha para as Eleições 2026</title>
 <meta name="description" content="Estúdio de sites de campanha. Sete campanhas no ar em quatro estados, de deputado estadual a governador. Site próprio, com urna, trajetória e entregas no lugar certo." />
-<link rel="icon" href="ativos/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="ativos/vortex-marca.png" type="image/png" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="pt_BR" />
-<meta property="og:title" content="Primeiro Turno · Sites de campanha para as Eleições 2026" />
+<meta property="og:title" content="Vortex · Sites de campanha para as Eleições 2026" />
 <meta property="og:description" content="Sete campanhas no ar, em quatro estados, de deputado estadual a governador. Veja os sites funcionando." />
 <!-- Trocar por URL absoluta (https://seudominio.com.br/ativos/og.jpg) quando o dominio estiver definido:
      WhatsApp, LinkedIn e X so leem og:image absoluto. -->
@@ -28,9 +28,9 @@
 <header class="topo" id="topo">
   <div class="topo__interno">
     <a class="marca" href="#topo" aria-label="Página inicial">
-      <span class="marca__glifo" aria-hidden="true"></span>
+      <img class="marca__glifo" src="ativos/vortex-marca.png" alt="" width="512" height="512" />
       <span class="marca__texto">
-        <b data-marca-nome>Primeiro Turno</b>
+        <b data-marca-nome>Vortex</b>
         <i data-marca-linha>sites de campanha</i>
       </span>
     </a>
@@ -54,20 +54,25 @@
 <main>
   <!-- ==================== CAPA ==================== -->
   <section class="capa" aria-labelledby="capa-titulo">
-    <div class="capa__brilho" aria-hidden="true"></div>
+    <img class="capa__marca" src="ativos/vortex-marca.png" alt="" aria-hidden="true" width="512" height="512" />
 
     <div class="capa__interno">
       <div class="capa__texto">
         <p class="sobrancelha">Sites de campanha · Eleições 2026</p>
         <h1 class="capa__titulo" id="capa-titulo">
-          Sua campanha<br />mora num perfil<br /><em>que não é seu.</em>
+          Todo candidato tem<br />uma história pra contar.<br /><em>A questão é onde<br />ela vai ser contada.</em>
         </h1>
         <p class="capa__sub">
           A gente constrói o endereço da campanha: site próprio, no ar em dias, com a urna,
           a trajetória e as entregas no lugar certo. Ao lado, sete campanhas reais que já estão de pé.
         </p>
         <div class="capa__botoes">
-          <a class="botao botao--acao botao--g" data-zap href="#contato">Falar no WhatsApp</a>
+          <a class="botao botao--acao botao--g botao--icone" data-zap href="#contato" aria-label="Falar no WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </a>
+          <a class="botao botao--linha botao--g" data-email href="#contato">Mandar e-mail</a>
           <a class="botao botao--linha botao--g" href="#obra">Ver as campanhas</a>
         </div>
 
@@ -187,9 +192,12 @@
 
 <footer class="rodape">
   <div class="rodape__interno">
-    <p class="rodape__marca"><b data-marca-nome>Primeiro Turno</b> · sites de campanha · Eleições 2026</p>
+    <p class="rodape__marca"><b data-marca-nome>Vortex</b> · sites de campanha · Eleições 2026</p>
     <p class="rodape__nota">
       Marca e nome provisórios. Os sites exibidos são de campanhas reais atendidas pela equipe.
+    </p>
+    <p class="rodape__nota">
+      <a class="rodape__email" data-email href="#contato">v0rtexangency@gmail.com</a>
     </p>
   </div>
 </footer>

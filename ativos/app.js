@@ -4,15 +4,14 @@
    ========================================================= */
 
 const CONFIG = {
-  // Marca provisória: trocar quando o nome da empresa estiver fechado.
-  marca: "Primeiro Turno",
+  marca: "Vortex",
   linhaMarca: "sites de campanha",
 
   // Contato. O telefone entra só com dígitos, com DDI 55.
-  whatsapp: "5511999999999",
+  whatsapp: "5537988271126",
   mensagemZap:
     "Olá! Vi o portfólio de sites de campanha e quero falar sobre o site da minha candidatura.",
-  email: "contato@exemplo.com.br",
+  email: "v0rtexangency@gmail.com",
   assuntoEmail: "Site de campanha — Eleições 2026",
 
   // Prazos exibidos na página. Confirmar antes de publicar.
