@@ -11,7 +11,7 @@ if ($app -notmatch 'whatsapp:\s*"5537988271126"') {
   throw "O WhatsApp deve apontar para o número informado, com DDI do Brasil."
 }
 
-if ($app -notmatch 'email:\s*"v0rtexangency@gmail\.com"') {
+if ($app -notmatch 'email:\s*"vortexsoftwareco@gmail\.com"') {
   throw "O e-mail corporativo deve estar configurado."
 }
 

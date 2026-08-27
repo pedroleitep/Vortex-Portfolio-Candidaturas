@@ -11,7 +11,7 @@ const CONFIG = {
   whatsapp: "5537988271126",
   mensagemZap:
     "Olá! Vi o portfólio de sites de campanha e quero falar sobre o site da minha candidatura.",
-  email: "v0rtexangency@gmail.com",
+  email: "vortexsoftwareco@gmail.com",
   assuntoEmail: "Site de campanha — Eleições 2026",
 
   // Prazos exibidos na página. Confirmar antes de publicar.
